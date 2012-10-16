@@ -1,0 +1,33 @@
+.body {
+    background-color: black;
+}
+
+.eyes {
+    position:absolute;
+    top: 120px;
+    width: 200px;
+    height: 200px;
+    
+    background-image: url("circle.png");
+    -webkit-transform: scale(0.70, 0.70);
+}
+
+#leftEye {
+    left:-20px;
+}
+
+#rightEye {
+    left:140px;
+}
+
+.iris {
+    position:absolute;
+    top:  0px;
+    left: 0px;
+    
+    width: 200px;
+    height: 200px;
+    
+    background-image: url("black_circle.png");
+    -webkit-transform: scale(0.20, 0.20);
+}
