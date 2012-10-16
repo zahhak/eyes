@@ -4,8 +4,7 @@ var global = {
     irisTranslate : {
         x : 0,
         y : 0,
-        maxX : 280,
-        maxY : 280
+        maxLength : 350
     },
 };    
 
@@ -13,31 +12,26 @@ function setTransfromOnIrisClass() {
     var irises = document.getElementsByClassName("iris");
     for(var i = 0; i < irises.length; i++){
         var iris = irises[i];
-        
-        iris.style.webkitTransform = "scale(" + global.irisScale + "," + global.irisScale + ") translate("+ global.irisTranslate.x + "px," + global.irisTranslate.y + "px)"; 
+        iris.style.webkitTransform = "scale(" + global.irisScale + "," + global.irisScale + ") \
+                                      translate("+ global.irisTranslate.x + "px," + global.irisTranslate.y + "px)"; 
     }
 }
 
 function startListeningForAccelorometerChanges() {
     function onSuccess(acceleration) {
-        var maxX = global.irisTranslate.maxX;
-        var maxY = global.irisTranslate.maxY;
+        var maxLength = global.irisTranslate.maxLength;
         
-        var x = acceleration.x * 70;
-        var y = -acceleration.y * 70;
-        if (x > maxX ) {
-            x = maxX;
+        var x = acceleration.x * 40;
+        var y = -acceleration.y * 40;
+        var length =  Math.sqrt(Math.pow(x,2) + Math.pow(y, 2));
+   
+        var xySum = Math.abs(x) + Math.abs(y);
+        if (length > maxLength) {
+            x = maxLength * (x  / xySum );
+            y = maxLength * (y  / xySum );
         }
-        if (x < -maxX) {
-            x = -maxX;
-        }
-        
-        if (y > maxY ) {
-            y = maxY;
-        }
-        if (y < -maxY) {
-            y = -maxY;
-        }
+       
+        //console.log("Length " + length + "x: " + (x  / xySum) + " y: " + (y  / xySum)); 
         
         global.irisTranslate.x = x;
         global.irisTranslate.y = y;
@@ -79,4 +73,3 @@ function test() {
     global.irisTranslate.y = Math.random() * 150 - 75;
     setTransfromOnIrisClass();
 }
-
